@@ -1,0 +1,47 @@
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+
+----------------------------------------------------------------------------------------------------------------------------
+The GROUP BY statement is often used with aggregate functions
+ (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+
+ SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID) DESC;        
+
+SELECT MIN(salary) AS SecondHighestSalary FROM
+(SELECT TOP 2 * FROM Employee
+WHERE (SELECT COUNT(salary) FROM Employee)>=2
+ORDER BY salary);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+Q--> Sort the distinct salary in descend order and then utilize the LIMIT clause to get the second highest salary.
+SELECT 
+CASE WHEN ((SELECT COUNT(salary) FROM Employee)>=2) THEN (SELECT DISTINCT
+    Salary 
+FROM
+    Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1) 
+ELSE NULL
+END AS SecondHighestSalary
+
+Q--> NTH second highest salary 
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+DECLARE P INT;
+ SET P = N-1;
+  RETURN (
+      SELECT 
+CASE WHEN ((SELECT COUNT(salary) FROM Employee)>=N) THEN (SELECT DISTINCT
+    Salary 
+FROM
+    Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET P) 
+ELSE NULL
+END AS getNthHighestSalary 
+  );
+END
