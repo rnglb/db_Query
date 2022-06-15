@@ -26,13 +26,6 @@ CREATE TABLE table_name (
 )
 NOT NULL / UNIQUE / PRIMARY KEY / FOREIGN KEY / CHECK / DEFAULT / CREATE INDEX
 
-
-
-
-
-
-
-
 /*
 The BACKUP DATABASE statement is used in SQL Server to create a full back up of an existing SQL database.
 A differential back up only backs up the parts of the database that have changed since the last full database
@@ -44,7 +37,6 @@ TO DISK = 'filepath';
 BACKUP DATABASE databasename
 TO DISK = 'filepath'
 WITH DIFFERENTIAL;
-
 
 
 
